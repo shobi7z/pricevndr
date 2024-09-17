@@ -1,174 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <title>حاسبة الشحن</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحويل الدولار إلى دينار</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            direction: rtl;
+            text-align: center;
+            background-color: #f0f4f8;
+            padding: 50px 20px;
         }
-
         .container {
             background-color: #ffffff;
-            padding: 10px;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 70%;
-            max-width: 250px;
-            text-align: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            margin: auto;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+        }
         h2 {
-            margin-bottom: 8px;
             color: #333;
-            font-size: 14px;
+            margin-bottom: 20px;
+            font-size: 2em;
         }
-
         label {
+            font-size: 1.1em;
+            margin-bottom: 10px;
             display: block;
-            margin-bottom: 4px;
             color: #555;
-            font-size: 10px;
-            text-align: left;
         }
-
-        input[type="number"] {
-            width: calc(100% - 16px);
-            padding: 4px;
-            margin-bottom: 8px;
-            border: 1px solid #ccc;
+        input {
+            font-size: 1.2em;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 2px solid #007BFF;
             border-radius: 5px;
-            font-size: 10px;
+            outline: none;
+            transition: border-color 0.3s;
         }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            padding: 6px 12px;
-            border: none;
+        input:focus {
+            border-color: #0056b3;
+        }
+        output {
+            font-size: 1.5em;
+            color: #007BFF;
+            margin-top: 20px;
+            display: block;
+            font-weight: bold;
+            border-top: 2px solid #007BFF;
+            padding-top: 10px;
+            background-color: #e7f3ff;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 10px;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        p {
-            font-size: 12px;
-            margin: 6px 0;
-            color: #333;
-        }
-
-        .result {
-            background-color: #f9f9f9;
-            padding: 6px;
-            border-radius: 10px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        @media (max-width: 600px) {
-            h2 {
-                font-size: 12px;
-            }
-
-            label, input[type="number"], button {
-                font-size: 8px;
-            }
-
-            button {
-                padding: 4px 8px;
-            }
-
-            p {
-                font-size: 10px;
-            }
-
-            .result {
-                padding: 4px;
-            }
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <img src="https://cdn-icons-png.flaticon.com/128/781/781760.png" alt="Shipping Icon" width="50" height="50">
-        <h2>حاسبة الشحن</h2>
-        <label for="price">سعر المنتج ($):</label>
-        <input type="number" id="price" step="0.01"><br><br>
-        <label for="length">الطول (سم):</label>
-        <input type="number" id="length" step="0.01"><br><br>
-        <label for="width">العرض (سم):</label>
-        <input type="number" id="width" step="0.01"><br><br>
-        <label for="height">الارتفاع (سم):</label>
-        <input type="number" id="height" step="0.01"><br><br>
-        <button onclick="calculateShipping()">احسب</button>
-        <div class="result">
-            <h3>تكلفة الشحن ($):</h3>
-            <p id="shippingCost">0.00</p>
-            <h3>السعر الإجمالي ($):</h3>
-            <p id="totalPrice">0.00</p>
-            <h3>السعر الإجمالي (دينار عراقي):</h3>
-            <p id="totalPriceIQD">0.00</p>
-        </div>
+        <h2>تحويل الدولار إلى دينار عراقي</h2>
+        <label for="dollarInput">أدخل السعر بالدولار:</label>
+        <input type="number" id="dollarInput" step="0.01" oninput="convertToDinar()" placeholder="أدخل السعر بالدولار">
+        <output id="dinarOutput">الناتج بالدينار: 0</output>
     </div>
+
     <script>
-        function calculateShipping() {
-            const price = parseFloat(document.getElementById('price').value);
-            const length = parseFloat(document.getElementById('length').value);
-            const width = parseFloat(document.getElementById('width').value);
-            const height = parseFloat(document.getElementById('height').value);
-
-            const volumeInCubicMeters = (length * width * height) / 1000000;
-            let shippingCost = volumeInCubicMeters * 400;
-
-            // Ensure minimum shipping cost is $0.5
-            if (shippingCost < 0.5) {
-                shippingCost = 0.5;
-            }
-
-            // Round shipping cost to nearest 0.25
-            shippingCost = roundToNearestQuarter(shippingCost);
-
-            const totalPrice = price + shippingCost;
-            const totalPriceIQD = totalPrice * 1400;
-
-            document.getElementById('shippingCost').innerText = shippingCost.toFixed(2);
-            document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
-            document.getElementById('totalPriceIQD').innerText = formatIQD(totalPriceIQD);
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        function roundToNearestQuarter(amount) {
-            return Math.round(amount * 4) / 4;
+        function roundToNearest(num) {
+            const decimalPart = num % 1000;
+
+            if (decimalPart > 550) {
+                return Math.ceil(num / 1000) * 1000; // تقريب للأعلى
+            } else if (decimalPart > 100) {
+                return Math.floor(num / 1000) * 1000 + 500; // تقريب إلى 500
+            } else {
+                return Math.floor(num / 1000) * 1000; // الحفاظ على العدد الصحيح
+            }
         }
 
-        function formatIQD(amount) {
-            const roundedAmount = Math.round(amount / 250) * 250;
-            const integerPart = Math.floor(roundedAmount);
-            const decimalPart = roundedAmount - integerPart;
-
-            let formatted = integerPart.toLocaleString('en');
-
-            if (decimalPart === 0) {
-                formatted += " دينار";
-            } else if (decimalPart === 250) {
-                formatted += " ربع";
-            } else if (decimalPart === 500) {
-                formatted += " نصف";
-            } else if (decimalPart === 750) {
-                formatted += " ثلاث أرباع";
+        function convertToDinar() {
+            let dollarPrice = parseFloat(document.getElementById('dollarInput').value);
+            if (!isNaN(dollarPrice)) {
+                let dinarPrice = dollarPrice * 1380;
+                let roundedPrice = roundToNearest(dinarPrice);
+                document.getElementById('dinarOutput').textContent = "الناتج بالدينار: " + formatNumber(roundedPrice);
+            } else {
+                document.getElementById('dinarOutput').textContent = "الناتج بالدينار: 0";
             }
-
-            return formatted;
         }
     </script>
+
 </body>
 </html>
