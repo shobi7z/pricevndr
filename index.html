@@ -4,66 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحويل الدولار إلى دينار</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
     <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #6366f1;
+            --text-color: #f3f4f6;
+            --background-color: #111827;
+            --card-bg: #1f2937;
+            --button-bg: linear-gradient(45deg, #4f46e5, #818cf8);
+            --button-hover: linear-gradient(45deg, #3730a3, #6366f1);
+            --radius: 15px;
+            --shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            direction: rtl;
-            text-align: center;
-            background-color: #f0f4f8;
-            padding: 50px 20px;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
+
         .container {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 400px;
-            margin: auto;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
-        label {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            display: block;
-            color: #555;
-        }
-        input {
-            font-size: 1.2em;
-            padding: 10px;
-            margin: 10px 0;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--radius);
             width: 100%;
-            border: 2px solid #007BFF;
-            border-radius: 5px;
-            outline: none;
-            transition: border-color 0.3s;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            text-align: center;
         }
-        input:focus {
-            border-color: #0056b3;
+
+        h2 {
+            color: var(--secondary-color);
+            font-size: 24px;
+            margin-bottom: 20px;
         }
-        output {
-            font-size: 1.5em;
-            color: #007BFF;
-            margin-top: 20px;
+
+        label {
+            font-size: 16px;
+            color: var(--text-color);
             display: block;
-            font-weight: bold;
-            border-top: 2px solid #007BFF;
-            padding-top: 10px;
-            background-color: #e7f3ff;
-            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: var(--radius);
+            background: #374151;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        output {
+            font-size: 16px;
+            color: var(--text-color);
+            background: #4b5563;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-top: 15px;
+            box-shadow: var(--shadow);
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>تحويل الدولار إلى دينار عراقي</h2>
         <label for="dollarInput">أدخل السعر بالدولار:</label>
@@ -99,6 +111,5 @@
             }
         }
     </script>
-
 </body>
 </html>
